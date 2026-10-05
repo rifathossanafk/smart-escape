@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Smart Escape — dark operations palette */
+    --se-bg: #050810;
+    --se-panel: #0c1220;
+    --se-panel-2: #111a2b;
+    --se-border: #1a2540;
+    --se-route: #22d3ee;
+    --se-safe: #34d399;
+    --se-warn: #fbbf24;
+    --se-hazard: #f87171;
+    --se-text: #dbe4f0;
+    --se-dim: #6b7a94;
+
+    --background: 222 52% 4%;
+    --foreground: 216 33% 90%;
+    --card: 220 47% 9%;
+    --card-foreground: 216 33% 90%;
+    --popover: 220 47% 9%;
+    --popover-foreground: 216 33% 90%;
+    --primary: 187 85% 53%;
+    --primary-foreground: 222 52% 6%;
+    --secondary: 220 43% 15%;
+    --secondary-foreground: 216 33% 90%;
+    --muted: 220 43% 15%;
+    --muted-foreground: 218 17% 56%;
+    --accent: 220 43% 15%;
+    --accent-foreground: 216 33% 90%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 42% 16%;
+    --input: 220 42% 16%;
+    --ring: 187 85% 53%;
+    --radius: 0.375rem;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--se-bg);
+    color: var(--se-text);
+    font-family: 'Inter', 'Noto Sans Bengali', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-mono2 {
+    font-family: 'JetBrains Mono', 'Noto Sans Bengali', ui-monospace, monospace;
+  }
+
+  /* subtle scanline texture on the app backdrop */
+  .se-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.014) 0px,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  /* thin themed scrollbars */
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #1a2540;
+    border-radius: 3px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: #22d3ee55;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--se-route);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Smart Escape animations ---------- */
+
+@keyframes se-pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes se-dash-flow {
+  to { stroke-dashoffset: -28; }
+}
+
+@keyframes se-route-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes se-blink-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes se-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes se-radar {
+  to { transform: rotate(360deg); }
+}
+
+.se-route-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: se-route-draw 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.se-route-flow {
+  stroke-dasharray: 6 22;
+  animation: se-dash-flow 1.4s linear infinite;
+}
+
+.se-node-pulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: se-pulse-ring 1.6s ease-out infinite;
+}
+
+.se-live-dot {
+  animation: se-blink-dot 1.6s ease-in-out infinite;
+}
+
+.se-fade-up {
+  animation: se-fade-up 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.se-radar-sweep {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: se-radar 4.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .se-route-line,
+  .se-route-flow,
+  .se-node-pulse,
+  .se-live-dot,
+  .se-fade-up,
+  .se-radar-sweep {
+    animation: none !important;
+  }
+  .se-route-line {
+    stroke-dashoffset: 0;
+  }
+}
